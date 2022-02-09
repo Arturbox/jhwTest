@@ -1,0 +1,48 @@
+version: '3.5'
+
+networks:
+    default:
+        name: treasury
+
+services:
+    app:
+        build:
+          context: .
+          target: dev
+        container_name: app
+        restart: unless-stopped
+        environment: &environment
+            REDIS_SCHEME: unix
+        volumes:
+          - ./:/var/www
+        depends_on:
+            - mysql
+            - webserver
+        networks:
+            - default
+
+    webserver:
+      image: nginx:alpine
+      container_name: webserver
+      restart: unless-stopped
+      tty: true
+      ports:
+        - "8080:80"
+        - "443:443"
+      volumes:
+        - ./:/var/www
+        - ./contrib/nginx/conf.d/:/etc/nginx/conf.d/
+      networks:
+        - default
+
+    mysql:
+        build:
+            context: contrib/mysql
+            dockerfile: Dockerfile
+        container_name: mysql
+        environment:
+          MYSQL_ROOT_PASSWORD: l3k4gp7n&ntg7g3
+        ports:
+            - "3306:3306"
+        networks:
+            - default
