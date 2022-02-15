@@ -6,7 +6,6 @@ use Generator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Throwable;
-use Orchestra\Parser\Xml\Facade as XmlParser;
 
 
 class Client

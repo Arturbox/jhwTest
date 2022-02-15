@@ -26,7 +26,7 @@ class Manager
     {
         try {
             self::updating();
-            dispatch_sync(app(UpdateTreasurySdnEntities::class));
+            dispatch(app(UpdateTreasurySdnEntities::class));
         } finally {
             self::processed();
         }

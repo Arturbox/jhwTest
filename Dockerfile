@@ -25,21 +25,15 @@ COPY contrib/php/opcache.ini /usr/local/etc/php/conf.d
 
 WORKDIR /var/www
 
-ENV PATH="$PATH:/var/www/vendor/bin"
-
 ARG CACHEBUST=1
 # Install dependencies
 COPY composer.json ./
-RUN composer install --prefer-dist --no-scripts --no-dev --no-autoloader && echo "${CACHEBUST}"
-
-COPY --from=spiralscout/roadrunner:2.6.3 /usr/bin/rr /usr/bin/rr
+RUN composer install && echo "${CACHEBUST}"
 
 FROM base AS dev
 
 ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="1"
 ENV PHP_OPCACHE_ENABLE_CLI="1"
-
-COPY . ./
 
 RUN composer update && echo "${CACHEBUST}"
 RUN composer dump-autoload

@@ -101,7 +101,6 @@ $app->withEloquent();
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
  $app->register(App\Providers\FacadeProvider::class);
- $app->register(Orchestra\Parser\XmlServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
